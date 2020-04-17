@@ -1,14 +1,16 @@
-package com.example.musicpro;
+package com.example.musicpro.utils;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper {
 
 
-    public DBHelper(Context context) {
+    DBHelper(Context context) {
         super(context, Constants.DB_NAME, null, Constants.DB_VERSION);
+        SQLiteDatabase db = this.getWritableDatabase();
     }
 
     //TABLE CREATION
@@ -17,9 +19,10 @@ public class DBHelper extends SQLiteOpenHelper {
         try
         {
             db.execSQL(Constants.CREATE_TB);
+            Log.e("TABLE","Created");
 
         }catch (Exception ex)
-        {
+        {Log.e("TABLE","Failed");
             ex.printStackTrace();
         }
 

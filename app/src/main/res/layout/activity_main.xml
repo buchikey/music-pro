@@ -4,30 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity"
+    android:padding="50dp">
+
 
     <Button
-        android:id="@+id/venue_button"
-        android:layout_width="324dp"
-        android:layout_height="209dp"
-        android:layout_marginBottom="100dp"
-        android:text="VENUES"
-        app:layout_constraintBottom_toTopOf="@+id/map_button"
+        android:id="@+id/venue_btn"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:text="venues"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toTopOf="@id/map_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/map_button"
-        android:layout_width="324dp"
-        android:layout_height="209dp"
-        android:layout_marginBottom="88dp"
-        android:text="MAP"
+        android:id="@+id/map_btn"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:text="map"
+        android:textAllCaps="true"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.071"
-        app:layout_constraintStart_toStartOf="@id/venue_button" />
+        app:layout_constraintTop_toBottomOf="@id/venue_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
