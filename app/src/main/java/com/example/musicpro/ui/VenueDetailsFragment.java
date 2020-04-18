@@ -23,7 +23,7 @@ public class VenueDetailsFragment extends Fragment implements View.OnClickListen
     private Button doneVenueBtn, deleteVenueBtn;
     private VenueDetailsListener venueDetailsListener;
 
-    private String venueName, venueAddress, openingTime;
+    private String venueName, venueAddress, openingTime, venueId;
     private Venue venue;
 
     static VenueDetailsFragment newInstance(String type, Venue venue) {
@@ -55,7 +55,7 @@ public class VenueDetailsFragment extends Fragment implements View.OnClickListen
             final String type = getArguments().getString("TYPE");
             Log.e("Venue", venue.toString());
             if(type.equals("EDIT")){
-
+                venueId = venue.getId();
                 venueNameInput.setText(venue.getName());
                 venueAddressInput.setText(venue.getAddress());
                 openingTimeInput.setText(venue.getTime());
@@ -93,7 +93,12 @@ public class VenueDetailsFragment extends Fragment implements View.OnClickListen
                     venueDetailsListener.onError("Venue Details are incomplete");
                 } else {
                     Toast.makeText(getContext(), errorId + "", Toast.LENGTH_SHORT).show();
-                    venue = new Venue(venueName, venueAddress, openingTime);
+                    if(venueId == null){
+                        venue = new Venue(venueName, venueAddress, openingTime);
+                    }else{
+                        venue = new Venue(venueId, venueName, venueAddress, openingTime);
+                    }
+
 //                    getView().findViewById(errorId).getBackground().setColorFilter(getResources().getColor(android.R.color.black),
 //                            PorterDuff.Mode.SRC_ATOP);
                     venueDetailsListener.onDone(venue);

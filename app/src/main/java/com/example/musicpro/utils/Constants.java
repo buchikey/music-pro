@@ -12,9 +12,9 @@ public class Constants {
     //DB PROPERTIES
     static final String DB_NAME="music_pro";
     static final String TB_NAME="venue_details";
-    static final int DB_VERSION='1';
+    static final int DB_VERSION='2';
 
-    static final String CREATE_TB="CREATE TABLE venue_details(id INTEGER PRIMARY KEY AUTOINCREMENT,"
+    static final String CREATE_TB="CREATE TABLE venue_details(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
             + "name TEXT NOT NULL,address TEXT NOT NULL, opening_time TEXT NULL);";
 }
 

@@ -32,12 +32,14 @@ public class DBAdapter {
     public long add(String name, String address, String opening_time) {
         try {
             db = helper.getWritableDatabase();
-            ContentValues cv = new ContentValues();
-            cv.put(Constants.NAME, name);
-            cv.put(Constants.ADDRESS, address);
-            cv.put(Constants.OPENING_TIME, opening_time);
-
-            return db.insert(Constants.TB_NAME, Constants.ROW_ID, cv);
+//            ContentValues cv = new ContentValues();
+//            cv.put(Constants.NAME, name);
+//            cv.put(Constants.ADDRESS, address);
+//            cv.put(Constants.OPENING_TIME, opening_time);
+            db.execSQL("INSERT INTO "+Constants.TB_NAME+" ("+Constants.NAME+","+Constants.ADDRESS+","+Constants.OPENING_TIME+") VALUES('"+name+"','"+address+
+                    "','"+opening_time+"');");
+//            return db.insert(Constants.TB_NAME, null, cv);
+            return 1;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -47,13 +49,14 @@ public class DBAdapter {
 
     public long updateData(String row_id, String name, String address, String opening_time) {
         try {
+            Log.e("Venue", row_id+" "+name+" "+address +" "+opening_time);
             db = helper.getWritableDatabase();
             ContentValues cv = new ContentValues();
             cv.put(Constants.NAME, name);
             cv.put(Constants.ADDRESS, address);
             cv.put(Constants.OPENING_TIME, opening_time);
 
-            return db.update(Constants.TB_NAME, cv, Constants.ROW_ID + "=?", new String[]{row_id});
+            return db.update(Constants.TB_NAME, cv, " id = ?", new String[]{row_id});
         } catch (SQLException e) {
             e.printStackTrace();
         }

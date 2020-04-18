@@ -42,7 +42,7 @@ public class VenueListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //fetchListener.fetchVenues();
+        fetchListener.fetchVenues();
     }
 
     @Override

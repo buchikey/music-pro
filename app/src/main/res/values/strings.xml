@@ -2,7 +2,7 @@
     <string name="app_name">MusicPro</string>
     <string name="new_venue">New Venue</string>
     <string name="delete_venue">Delete Venue?</string>
-    <string name="warning">Venue details are incomplete</string>
+    <string name="venue_details_warning">Venue details are incomplete</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -50,7 +50,7 @@ public class VenueActivity extends AppCompatActivity implements VenueListAdapter
     protected void onResume() {
         super.onResume();
         fetchDBData();
-        venueListFragment.setVenueList(venueList);
+        fetchVenues();
     }
 
     @Override
@@ -79,7 +79,7 @@ public class VenueActivity extends AppCompatActivity implements VenueListAdapter
     @Override
     public void onDelete(final Venue venue) {
         if (venue.getId() != null) {
-            builder.setMessage("Delete Venue ?")
+            builder.setMessage(R.string.delete_venue)
                     .setCancelable(false)
                     .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -102,16 +102,11 @@ public class VenueActivity extends AppCompatActivity implements VenueListAdapter
 
     @Override
     public void onError(String errorMessage) {
-        builder.setMessage("Venue details are incomplete")
+        builder.setMessage(R.string.venue_details_warning)
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
                     }
                 });
         AlertDialog alert = builder.create();
@@ -127,10 +122,11 @@ public class VenueActivity extends AppCompatActivity implements VenueListAdapter
                 do {
                     if (cursor.getCount() > 0) {
                         Log.e("Cursor", "" + cursor.getColumnCount());
-                        final String venueId = String.valueOf(cursor.getColumnIndex(Constants.ID));
+                        final String venueId = String.valueOf(cursor.getInt(cursor.getColumnIndex(Constants.ID)));
                         final String venueName = cursor.getString(cursor.getColumnIndex(Constants.NAME));
                         final String venueAddress = cursor.getString(cursor.getColumnIndex(Constants.ADDRESS));
                         final String openingTime = cursor.getString(cursor.getColumnIndex(Constants.OPENING_TIME));
+                        Log.e("Details", venueId +" "+ venueName +" "+ venueAddress +" "+ openingTime+" "+ String.valueOf(cursor.getInt(cursor.getColumnIndex(Constants.ID))));
                         venueList.add(new Venue(venueId, venueName, venueAddress, openingTime));
                     }
 
@@ -157,8 +153,9 @@ public class VenueActivity extends AppCompatActivity implements VenueListAdapter
             dbAdapter.closeDB();
         }
         fetchDBData();
+        fetchVenues();
         fragmentManager.popBackStack();
-        venueListFragment.setVenueList(venueList);
+
     }
 
     @Override
