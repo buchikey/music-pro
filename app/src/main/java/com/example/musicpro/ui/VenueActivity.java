@@ -4,14 +4,12 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.musicpro.R;
@@ -22,10 +20,9 @@ import com.example.musicpro.utils.DBAdapter;
 import java.util.ArrayList;
 
 
-public class VenueActivity extends AppCompatActivity implements VenueListAdapter.OnClickListener, VenueDetailsFragment.VenueDetailsListener, VenueListFragment.Listener {
+public class VenueActivity extends AppCompatActivity implements VenueListAdapter.OnClickListener, VenueDetailsFragment.VenueDetailsListener{
     private FragmentManager fragmentManager;
     private AlertDialog.Builder builder;
-    private Fragment currentFragment;
     private VenueDetailsFragment venueDetailsFragment;
     private VenueListFragment venueListFragment;
     private DBAdapter dbAdapter;
@@ -42,15 +39,12 @@ public class VenueActivity extends AppCompatActivity implements VenueListAdapter
         fetchDBData();
         venueListFragment = VenueListFragment.newInstance(venueList);
         venueDetailsFragment = VenueDetailsFragment.newInstance("ADD", null);
-        currentFragment = venueListFragment;
-        fragmentManager.beginTransaction().add(R.id.fragmentContainer, currentFragment, "venueList").commit();
+        fragmentManager.beginTransaction().setReorderingAllowed(true).add(R.id.fragmentContainer, venueListFragment, "VENUE_LIST").addToBackStack(null).commit();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        fetchDBData();
-        fetchVenues();
     }
 
     @Override
@@ -62,9 +56,9 @@ public class VenueActivity extends AppCompatActivity implements VenueListAdapter
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.new_venue) {
-            currentFragment = venueDetailsFragment;
-            fragmentManager.beginTransaction().replace(R.id.fragmentContainer, currentFragment, "venueDetails")
-                    .addToBackStack("venueList")
+            venueDetailsFragment = VenueDetailsFragment.newInstance("ADD", null);
+            fragmentManager.beginTransaction().replace(R.id.fragmentContainer, venueDetailsFragment, "VENUE_DETAILS")
+                    .addToBackStack(null)
                     .commit();
         }
         return super.onOptionsItemSelected(item);
@@ -72,8 +66,13 @@ public class VenueActivity extends AppCompatActivity implements VenueListAdapter
 
     @Override
     public void onVenueItemClick(Venue venue) {
-        currentFragment = VenueDetailsFragment.newInstance("EDIT", venue);
-        fragmentManager.beginTransaction().replace(R.id.fragmentContainer, currentFragment, "venueDetails").addToBackStack("venueList").commit();
+        venueDetailsFragment = VenueDetailsFragment.newInstance("EDIT", venue);
+        fragmentManager
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.fragmentContainer, venueDetailsFragment, "VENUE_DETAILS")
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
@@ -86,7 +85,8 @@ public class VenueActivity extends AppCompatActivity implements VenueListAdapter
 
                             dbAdapter.deleteOneRow(venue.getId());
                             fetchDBData();
-                            fragmentManager.popBackStack();
+                            venueListFragment = VenueListFragment.newInstance(venueList);
+                            fragmentManager.beginTransaction().replace(R.id.fragmentContainer, venueListFragment, "VENUE_LIST").addToBackStack(null).commit();
                         }
                     })
                     .setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -121,12 +121,10 @@ public class VenueActivity extends AppCompatActivity implements VenueListAdapter
             if (cursor.moveToFirst()) {
                 do {
                     if (cursor.getCount() > 0) {
-                        Log.e("Cursor", "" + cursor.getColumnCount());
                         final String venueId = String.valueOf(cursor.getInt(cursor.getColumnIndex(Constants.ID)));
                         final String venueName = cursor.getString(cursor.getColumnIndex(Constants.NAME));
                         final String venueAddress = cursor.getString(cursor.getColumnIndex(Constants.ADDRESS));
                         final String openingTime = cursor.getString(cursor.getColumnIndex(Constants.OPENING_TIME));
-                        Log.e("Details", venueId +" "+ venueName +" "+ venueAddress +" "+ openingTime+" "+ String.valueOf(cursor.getInt(cursor.getColumnIndex(Constants.ID))));
                         venueList.add(new Venue(venueId, venueName, venueAddress, openingTime));
                     }
 
@@ -142,7 +140,6 @@ public class VenueActivity extends AppCompatActivity implements VenueListAdapter
     @Override
     public void onDone(Venue venue) {
         try {
-            Log.e("VVVVV", venue.toString());
             if (venue.getId() == null)
                 dbAdapter.add(venue.getName(), venue.getAddress(), venue.getTime());
             else
@@ -153,14 +150,8 @@ public class VenueActivity extends AppCompatActivity implements VenueListAdapter
             dbAdapter.closeDB();
         }
         fetchDBData();
-        fetchVenues();
-        fragmentManager.popBackStack();
+        venueListFragment = VenueListFragment.newInstance(venueList);
+        fragmentManager.beginTransaction().replace(R.id.fragmentContainer, venueListFragment, "VENUE_LIST").addToBackStack(null).commit();
 
-    }
-
-    @Override
-    public void fetchVenues() {
-        //fetchDBData();
-        venueListFragment.setVenueList(venueList);
     }
 }

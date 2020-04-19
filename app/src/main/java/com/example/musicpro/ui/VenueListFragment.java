@@ -16,6 +16,7 @@ import com.example.musicpro.R;
 import com.example.musicpro.data.Venue;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -23,7 +24,6 @@ public class VenueListFragment extends Fragment {
     private RecyclerView venueRecyclerView;
     private List<Venue> venueList;
     private VenueListAdapter venueListAdapter;
-    private Listener fetchListener;
 
     public VenueListFragment() {
 
@@ -42,7 +42,6 @@ public class VenueListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        fetchListener.fetchVenues();
     }
 
     @Override
@@ -59,24 +58,5 @@ public class VenueListFragment extends Fragment {
         venueList.addAll(venues);
         venueListAdapter.notifyDataSetChanged();
         return view;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        Activity activity = getActivity();
-        if (activity instanceof Listener) {
-            fetchListener = (Listener) getActivity();
-        }
-    }
-
-    public void setVenueList(List<Venue> venueList) {
-        this.venueList = new ArrayList<>(venueList);
-        Log.e("Venue List", this.venueList.toString());
-        venueListAdapter.notifyDataSetChanged();
-    }
-
-    public interface Listener {
-        void fetchVenues();
     }
 }
