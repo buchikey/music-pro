@@ -90,6 +90,7 @@ public class VenueActivity extends AppCompatActivity implements VenueListAdapter
                             fragmentManager.beginTransaction().replace(R.id.fragmentContainer, venueListFragment, "VENUE_LIST").addToBackStack(null).commit();
                         }
                     })
+
                     .setNegativeButton(Html.fromHtml("<font color='#ff00bf'>NO</font>"), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
