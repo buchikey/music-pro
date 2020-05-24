@@ -1,10 +1,14 @@
 package com.example.musicpro.ui;
 
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -21,7 +25,7 @@ import com.example.musicpro.utils.DBAdapter;
 import java.util.ArrayList;
 
 
-public class VenueActivity extends AppCompatActivity implements VenueListAdapter.OnClickListener, VenueDetailsFragment.VenueDetailsListener{
+public class VenueActivity extends AppCompatActivity implements VenueListAdapter.OnClickListener, VenueDetailsFragment.VenueDetailsListener {
     private FragmentManager fragmentManager;
     private AlertDialog.Builder builder;
     private VenueDetailsFragment venueDetailsFragment;
@@ -99,6 +103,30 @@ public class VenueActivity extends AppCompatActivity implements VenueListAdapter
             AlertDialog alert = builder.create();
             alert.setTitle("Confirm");
             alert.show();
+        }
+    }
+
+    @Override
+    public void onSendInvitation(Venue venue) {
+
+        if (!TextUtils.isEmpty(venue.getName()) && !TextUtils.isEmpty(venue.getAddress())) {
+
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"));
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Invitation");
+            String emailBody = "You are invited to " + venue.getName();
+
+            //If venue has a time, add time as well
+            if (venue.getTime() != null && !TextUtils.isEmpty(venue.getTime())) {
+                emailBody += " tonight at " + venue.getTime();
+            }
+
+            emailIntent.putExtra(Intent.EXTRA_TEXT, emailBody);
+
+            try {
+                startActivity(Intent.createChooser(emailIntent, "Invitation"));
+            } catch (ActivityNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 

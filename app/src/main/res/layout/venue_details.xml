@@ -71,6 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Done"
+        android:textAllCaps="true"
         app:layout_constraintEnd_toStartOf="@id/deleteVenueBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/openingTimeText" />
@@ -81,8 +82,22 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Delete"
+        android:textAllCaps="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/doneVenueBtn"
         app:layout_constraintTop_toBottomOf="@id/openingTimeText" />
+
+    <Button
+        android:id="@+id/sendInvitationBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Send Invitation"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/deleteVenueBtn" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

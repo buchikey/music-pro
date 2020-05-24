@@ -7,6 +7,7 @@ public class Constants {
     public static final String ID = "id";
     public static final String ADDRESS = "address";
     public static final String OPENING_TIME = "opening_time";
+    public static final String BEST_VENUE = "BEST_VENUE";
 
 
     //DB PROPERTIES

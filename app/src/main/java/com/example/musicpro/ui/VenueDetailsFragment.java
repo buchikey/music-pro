@@ -20,7 +20,7 @@ import com.example.musicpro.data.Venue;
 
 public class VenueDetailsFragment extends Fragment implements View.OnClickListener {
     private EditText venueNameInput, venueAddressInput, openingTimeInput;
-    private Button doneVenueBtn, deleteVenueBtn;
+    private Button doneVenueBtn, deleteVenueBtn, sendInvitationBtn;
     private VenueDetailsListener venueDetailsListener;
 
     private String venueName, venueAddress, openingTime, venueId;
@@ -46,10 +46,13 @@ public class VenueDetailsFragment extends Fragment implements View.OnClickListen
         openingTimeInput = view.findViewById(R.id.openingTimeInput);
         doneVenueBtn = view.findViewById(R.id.doneVenueBtn);
         deleteVenueBtn = view.findViewById(R.id.deleteVenueBtn);
+        sendInvitationBtn = view.findViewById(R.id.sendInvitationBtn);
 
         doneVenueBtn.setOnClickListener(this);
 
         deleteVenueBtn.setOnClickListener(this);
+
+        sendInvitationBtn.setOnClickListener(this);
         try {
             venue = (Venue) getArguments().getSerializable("VENUE");
             final String type = getArguments().getString("TYPE");
@@ -108,6 +111,9 @@ public class VenueDetailsFragment extends Fragment implements View.OnClickListen
             case R.id.deleteVenueBtn:
                 venueDetailsListener.onDelete(venue);
                 break;
+            case R.id.sendInvitationBtn:
+                venueDetailsListener.onSendInvitation(venue);
+                break;
 
         }
     }
@@ -132,6 +138,8 @@ public class VenueDetailsFragment extends Fragment implements View.OnClickListen
 
     public interface VenueDetailsListener {
         void onDelete(Venue venue);
+
+        void onSendInvitation(Venue venue);
 
         void onError(String errorMessage);
 

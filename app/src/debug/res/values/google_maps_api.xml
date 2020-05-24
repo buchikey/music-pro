@@ -1,0 +1,24 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=9B:AD:E6:52:80:12:FB:57:06:CB:1E:66:A6:56:28:26:27:9D:98:B0%3Bcom.example.musicpro.ui
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    com.example.musicpro.ui
+
+    SHA-1 certificate fingerprint:
+    9B:AD:E6:52:80:12:FB:57:06:CB:1E:66:A6:56:28:26:27:9D:98:B0
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDKmlpX4U21CHWqoOJkp5B-_8kyEFUK9d8</string>
+</resources>
