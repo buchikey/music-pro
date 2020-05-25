@@ -111,7 +111,8 @@ public class VenueActivity extends AppCompatActivity implements VenueListAdapter
 
         if (!TextUtils.isEmpty(venue.getName()) && !TextUtils.isEmpty(venue.getAddress())) {
 
-            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"));
+            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+            emailIntent.setType("text/plain");
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Invitation");
             String emailBody = "You are invited to " + venue.getName();
 
